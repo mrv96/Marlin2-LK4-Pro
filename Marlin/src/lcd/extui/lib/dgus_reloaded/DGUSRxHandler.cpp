@@ -866,7 +866,7 @@ void DGUSRxHandler::PIDRun(DGUS_VP &vp, void *data_ptr) {
     return;
   }
 
-  heater_ind_t heater;
+  heater_id_t heater;
   uint8_t cycles = constrain(dgus_screen_handler.pid_cycles, 3, 10);
 
   switch (dgus_screen_handler.pid_heater) {
