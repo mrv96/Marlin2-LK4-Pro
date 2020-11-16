@@ -126,7 +126,9 @@ namespace ExtUI {
     }
 
     void onMeshUpdate(const int8_t xpos, const int8_t ypos, const ExtUI::probe_state_t state) {
-      dgus_screen_handler.MeshUpdate(xpos, ypos);
+      if (state == PROBE_FINISH) {
+        dgus_screen_handler.MeshUpdate(xpos, ypos);
+      }
     }
   #endif
 
