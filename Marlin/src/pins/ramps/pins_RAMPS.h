@@ -69,18 +69,22 @@
   #ifdef IS_RAMPS_13
     #define SERVO0_PIN                         7
   #else
-    #define SERVO0_PIN                        11
+    #ifndef U20_Pro_AutoBed
+      #define SERVO0_PIN                      11
+    #endif // !U20_Pro_AutoBed
   #endif
 #endif
-#ifndef SERVO1_PIN
-  #define SERVO1_PIN                           6
-#endif
-#ifndef SERVO2_PIN
-  #define SERVO2_PIN                           5
-#endif
-#ifndef SERVO3_PIN
-  #define SERVO3_PIN                           4
-#endif
+#ifndef LGT_MAC
+  #ifndef SERVO1_PIN
+    #define SERVO1_PIN                           6
+  #endif
+  #ifndef SERVO2_PIN
+    #define SERVO2_PIN                           5
+  #endif
+  #ifndef SERVO3_PIN
+    #define SERVO3_PIN                           4
+  #endif
+#endif // !LGT_MAC
 
 //
 // Limit Switches
@@ -89,33 +93,74 @@
   #ifndef X_MIN_PIN
     #define X_MIN_PIN                          3
   #endif
-  #ifndef X_MAX_PIN
-    #define X_MAX_PIN                          2
-  #endif
+  #ifndef LGT_MAC
+    #ifndef X_MAX_PIN
+      #define X_MAX_PIN                          2
+    #endif
+  #endif // !LGT_MAC
 #endif
+
 #ifndef Y_STOP_PIN
-  #ifndef Y_MIN_PIN
-    #define Y_MIN_PIN                         14
-  #endif
-  #ifndef Y_MAX_PIN
-    #define Y_MAX_PIN                         15
-  #endif
+  #ifdef LGT_ESP
+    #ifndef Y_MIN_PIN
+      #define Y_MIN_PIN                         37
+    #endif
+  #else
+    #ifndef Y_MIN_PIN
+      #define Y_MIN_PIN                         14
+    #endif
+  #endif // LGT_ESP
+  #ifndef LGT_ESP
+    #ifndef Y_MAX_PIN
+      #define Y_MAX_PIN                         15
+    #endif
+  #endif // !LGT_ESP
 #endif
-#ifndef Z_STOP_PIN
-  #ifndef Z_MIN_PIN
-    #define Z_MIN_PIN                         18
+
+#ifdef LGT_MAC
+	#define SD_DETECT_PIN   49
+	#ifndef FIL_RUNOUT_PIN
+		#define FIL_RUNOUT_PIN  2
+	#endif
+
+  #ifndef Z_STOP_PIN
+    #ifdef U20_Pro_AutoBed
+      #ifndef Z_MIN_PIN
+        #define Z_MIN_PIN                         11
+      #endif
+      #ifndef Z_MAX_PIN
+        #define Z_MAX_PIN                         37
+      #endif
+    #else //U30_Pro
+      #ifndef Z_MIN_PIN
+        #define Z_MIN_PIN                         35
+      #endif
+      #ifndef LGT_ESP
+        #ifndef Z_MAX_PIN
+          #define Z_MAX_PIN                         37
+        #endif
+      #endif // !LGT_ESP
+    #endif
   #endif
-  #ifndef Z_MAX_PIN
-    #define Z_MAX_PIN                         19
+#else
+  #ifndef Z_STOP_PIN
+    #ifndef Z_MIN_PIN
+      #define Z_MIN_PIN                         18
+    #endif
+    #ifndef Z_MAX_PIN
+      #define Z_MAX_PIN                         19
+    #endif
   #endif
-#endif
+#endif // LGT_MAC
 
 //
 // Z Probe (when not Z_MIN_PIN)
 //
-#ifndef Z_MIN_PROBE_PIN
-  #define Z_MIN_PROBE_PIN                     32
-#endif
+#ifndef LGT_MAC
+  #ifndef Z_MIN_PROBE_PIN
+    #define Z_MIN_PROBE_PIN                     32
+  #endif
+#endif // !LGT_MAC
 
 //
 // Steppers
@@ -150,12 +195,14 @@
   #define E0_CS_PIN                           42
 #endif
 
-#define E1_STEP_PIN                           36
-#define E1_DIR_PIN                            34
-#define E1_ENABLE_PIN                         30
-#ifndef E1_CS_PIN
-  #define E1_CS_PIN                           44
-#endif
+#ifndef LGT_MAC
+  #define E1_STEP_PIN                           36
+  #define E1_DIR_PIN                            34
+  #define E1_ENABLE_PIN                         30
+  #ifndef E1_CS_PIN
+    #define E1_CS_PIN                           44
+  #endif
+#endif // !LGT_MAC
 
 //
 // Temperature Sensors
@@ -163,9 +210,11 @@
 #ifndef TEMP_0_PIN
   #define TEMP_0_PIN                          13  // Analog Input
 #endif
-#ifndef TEMP_1_PIN
-  #define TEMP_1_PIN                          15  // Analog Input
-#endif
+#ifndef LGT_MAC
+  #ifndef TEMP_1_PIN
+    #define TEMP_1_PIN                          15  // Analog Input
+  #endif
+#endif // !LGT_MAC
 #ifndef TEMP_BED_PIN
   #define TEMP_BED_PIN                        14  // Analog Input
 #endif
@@ -253,9 +302,11 @@
 #endif
 
 // RAMPS 1.4 DIO 4 on the servos connector
-#ifndef FIL_RUNOUT_PIN
-  #define FIL_RUNOUT_PIN                       4
-#endif
+#ifndef LGT_MAC
+  #ifndef FIL_RUNOUT_PIN
+    #define FIL_RUNOUT_PIN                       4
+  #endif
+#endif // !LGT_MAC
 
 #ifndef PS_ON_PIN
   #define PS_ON_PIN                           12
@@ -422,9 +473,11 @@
 #ifndef E_MUX1_PIN
   #define E_MUX1_PIN                          42  // E0_CS_PIN
 #endif
-#ifndef E_MUX2_PIN
-  #define E_MUX2_PIN                          44  // E1_CS_PIN
-#endif
+#ifndef LGT_MAC
+  #ifndef E_MUX2_PIN
+    #define E_MUX2_PIN                          44  // E1_CS_PIN
+  #endif
+#endif // !LGT_MAC
 
 //////////////////////////
 // LCDs and Controllers //
