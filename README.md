@@ -12,7 +12,7 @@ Please test this firmware and let us know if it misbehaves in any way. Volunteer
 
 ## Modifications
 
-The scope of modifications is limited to the integration of a new extensible UI library for DGUS touchscreens.
+The scope of modifications is limited to the integration of a new extensible UI library for DWIN T5UID1 touchscreens.
 
 Core functionnality is, by design, left untouched from the upstream.
 
