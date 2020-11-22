@@ -364,8 +364,8 @@ void DGUSDisplay::ProcessRx() {
 }
 
 size_t DGUSDisplay::GetFreeTxBuffer() {
-  #ifdef DGUS_SERIAL_GET_TX_BUFFER_FREE
-    return DGUS_SERIAL_GET_TX_BUFFER_FREE();
+  #ifdef LCD_SERIAL_GET_TX_BUFFER_FREE
+    return LCD_SERIAL_GET_TX_BUFFER_FREE();
   #else
     return SIZE_MAX;
   #endif
