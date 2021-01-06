@@ -515,7 +515,7 @@ void DGUSRxHandler::Probe(DGUS_VP &vp, void *data_ptr) {
   #else
     dgus_screen_handler.TriggerScreenChange(DGUS_Screen::LEVELING_PROBING);
 
-    queue.inject_P(PSTR("M420S1")); // inject_P() avoids to full the standard gcode buffer
+    queue.inject_P(PSTR("M420S1\nM420L15")); // inject_P() avoids to full the standard gcode buffer
     #if ENABLED(AUTO_BED_LEVELING_UBL)
       queue.enqueue_now_P(PSTR("G29P1\nG29P3\nG29P5C"));
     #else
