@@ -513,7 +513,15 @@ void DGUSRxHandler::Probe(DGUS_VP &vp, void *data_ptr) {
     dgus_screen_handler.SetStatusMessagePGM(PSTR("Failed: disabled auto leveling"));
     return;
   #else
-    dgus_screen_handler.TriggerScreenChange(DGUS_Screen::LEVELING_PROBING);
+    #if DGUS_LEVEL_GRID_SIZE == GRID_MAX_POINTS_X * GRID_MAX_POINTS_Y
+      dgus_screen_handler.TriggerScreenChange(DGUS_Screen::LEVELING_PROBING);
+    #else
+      dgus_screen_handler.SetMessageLinePGM(NUL_STR, 1);
+      dgus_screen_handler.SetMessageLinePGM(PSTR("Probing..."), 2);
+      dgus_screen_handler.SetMessageLinePGM(NUL_STR, 3);
+      dgus_screen_handler.SetMessageLinePGM(NUL_STR, 4);
+      dgus_screen_handler.ShowWaitScreen(DGUS_Screen::LEVELING_PROBING);
+    #endif
 
     queue.inject_P(PSTR("M420S1\nM420L15")); // inject_P() avoids to full the standard gcode buffer
     #if ENABLED(AUTO_BED_LEVELING_UBL)

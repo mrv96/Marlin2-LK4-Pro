@@ -130,6 +130,14 @@ void DGUSScreenHandler::Loop() {
   if (current_screen == DGUS_Screen::WAIT
       && ((wait_continue && !wait_for_user)
           || (!wait_continue && IsPrinterIdle()))) {
+    if(wait_return_screen == DGUS_Screen::LEVELING_PROBING) {
+      wait_return_screen = DGUS_Screen::LEVELING_AUTOMATIC;
+      dgus_display.PlaySound(3);
+
+      SetStatusMessagePGM(ExtUI::getMeshValid() ?
+                            PSTR("Probing successful")
+                          : PSTR("Probing failed"));
+    }
     MoveToScreen(wait_return_screen, true);
     return;
   }
