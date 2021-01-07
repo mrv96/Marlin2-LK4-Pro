@@ -27,7 +27,7 @@
 
 //static_assert((DGUS_LEVEL_GRID_SIZE == GRID_MAX_POINTS_X * GRID_MAX_POINTS_Y), "DGUS_LEVEL_GRID_SIZE incompatible with current mesh.");
 #if DGUS_LEVEL_GRID_SIZE != GRID_MAX_POINTS_X * GRID_MAX_POINTS_Y
-#warning "DGUS_LEVEL_GRID_SIZE incompatible with current mesh. Auto leveling UI mesh will be messed up."
+  #warning "DGUS_LEVEL_GRID_SIZE incompatible with current mesh. Auto leveling UI mesh will be messed up."
 #endif
 
 #ifndef DGUS_DEFAULT_VOLUME
