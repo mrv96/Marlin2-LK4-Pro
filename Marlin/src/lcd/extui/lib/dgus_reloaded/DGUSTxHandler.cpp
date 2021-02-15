@@ -326,38 +326,48 @@ void DGUSTxHandler::StepIcons(DGUS_VP &vp) {
 void DGUSTxHandler::ABLDisableIcon(DGUS_VP &vp) {
   uint16_t data;
 
-  if (ExtUI::getLevelingActive()) {
-    data = (uint16_t)DGUS_Data::Status::ENABLED;
+  #if HAS_BED_PROBE
+    if (ExtUI::getLevelingActive()) {
+      data = (uint16_t)DGUS_Data::Status::ENABLED;
 
-    dgus_display.EnableControl(DGUS_Screen::LEVELING_AUTOMATIC,
-                               DGUSDisplay::RETURN_KEY_CODE,
-                               DGUS_Control::DISABLE);
-  }
-  else {
+      dgus_display.EnableControl(DGUS_Screen::LEVELING_AUTOMATIC,
+                                DGUSDisplay::RETURN_KEY_CODE,
+                                DGUS_Control::DISABLE);
+    }
+    else {
+      data = (uint16_t)DGUS_Data::Status::DISABLED;
+
+      dgus_display.DisableControl(DGUS_Screen::LEVELING_AUTOMATIC,
+                                  DGUSDisplay::RETURN_KEY_CODE,
+                                  DGUS_Control::DISABLE);
+    }
+  #else
     data = (uint16_t)DGUS_Data::Status::DISABLED;
 
     dgus_display.DisableControl(DGUS_Screen::LEVELING_AUTOMATIC,
                                 DGUSDisplay::RETURN_KEY_CODE,
                                 DGUS_Control::DISABLE);
-  }
+  #endif
 
   dgus_display.Write((uint16_t)vp.addr, Swap16(data));
 }
 
 void DGUSTxHandler::ABLGrid(DGUS_VP &vp) {
-  // Batch send
-  int16_t data[DGUS_LEVEL_GRID_SIZE];
-  xy_uint8_t point;
-  int16_t fixed;
+  #if HAS_BED_PROBE
+    // Batch send
+    int16_t data[DGUS_LEVEL_GRID_SIZE];
+    xy_uint8_t point;
+    int16_t fixed;
 
-  for (int i = 0; i < DGUS_LEVEL_GRID_SIZE; i++) {
-    point.x = i % GRID_MAX_POINTS_X;
-    point.y = i / GRID_MAX_POINTS_X;
-    fixed = dgus_display.ToFixedPoint<float, int16_t, 3>(ExtUI::getMeshPoint(point));
-    data[i] = Swap16(fixed);
-  }
+    for (int i = 0; i < DGUS_LEVEL_GRID_SIZE; i++) {
+      point.x = i % GRID_MAX_POINTS_X;
+      point.y = i / GRID_MAX_POINTS_X;
+      fixed = dgus_display.ToFixedPoint<float, int16_t, 3>(ExtUI::getMeshPoint(point));
+      data[i] = Swap16(fixed);
+    }
 
-  dgus_display.Write((uint16_t)vp.addr, data, sizeof(*data) * DGUS_LEVEL_GRID_SIZE);
+    dgus_display.Write((uint16_t)vp.addr, data, sizeof(*data) * DGUS_LEVEL_GRID_SIZE);
+  #endif
 }
 
 void DGUSTxHandler::FilamentIcons(DGUS_VP &vp) {

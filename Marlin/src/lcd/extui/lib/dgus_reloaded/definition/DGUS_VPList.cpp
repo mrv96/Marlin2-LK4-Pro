@@ -232,7 +232,11 @@ const struct DGUS_VP vp_list[] PROGMEM = {
                     &DGUSTxHandler::StepperStatus),
 
   VP_HELPER_TX_AUTO(DGUS_Addr::LEVEL_OFFSET_Current,
-                    &probe.offset.z,
+                    #if HAS_BED_PROBE
+                      &probe.offset.z,
+                    #else
+                      nullptr,
+                    #endif
                     (&DGUSTxHandler::ExtraToFixedPoint<float, 2>)),
   VP_HELPER_TX_EXTRA(DGUS_Addr::LEVEL_OFFSET_StepIcons,
                      &DGUSScreenHandler::offset_steps,
