@@ -118,7 +118,7 @@
  * Select a secondary serial port on the board to use for communication with the host.
  * :[-1, 0, 1, 2, 3, 4, 5, 6, 7]
  */
-//#define SERIAL_PORT_2 3
+#define SERIAL_PORT_2 3
 
 /**
  * This setting determines the communication speed of the printer.
@@ -474,7 +474,7 @@
 // Above this temperature the heater will be switched off.
 // This can protect components from overheating, but NOT from shorts and failures.
 // (Use MINTEMP for thermistor short/failure protection.)
-#define HEATER_0_MAXTEMP 265
+#define HEATER_0_MAXTEMP 295
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
@@ -531,7 +531,7 @@
  * heater. If your configuration is significantly different than this and you don't understand
  * the issues involved, don't use bed PID until someone else verifies that your hardware works.
  */
-//#define PIDTEMPBED
+#define PIDTEMPBED
 
 //#define BED_LIMIT_SWITCHING
 
@@ -707,7 +707,7 @@
 //#define Z2_DRIVER_TYPE A4988
 //#define Z3_DRIVER_TYPE A4988
 //#define Z4_DRIVER_TYPE A4988
-#define E0_DRIVER_TYPE A4988
+#define E0_DRIVER_TYPE TMC2208_STANDALONE
 //#define E1_DRIVER_TYPE A4988
 //#define E2_DRIVER_TYPE A4988
 //#define E3_DRIVER_TYPE A4988
@@ -762,7 +762,7 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 96 /*92.599*/ }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80.4, 400, 439.75/*96*/ }
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -896,10 +896,8 @@
  * Use G29 repeatedly, adjusting the Z height at each point with movement commands
  * or (with LCD_BED_LEVELING) the LCD controller.
  */
-#if !EITHER(U20_Pro_AutoBed, U30_Pro_AutoBed)
-  //#define PROBE_MANUALLY
-  //#define MANUAL_PROBE_START_Z 0.2
-#endif
+//#define PROBE_MANUALLY
+//#define MANUAL_PROBE_START_Z 0.2
 
 /**
  * A Fix-Mounted Probe either doesn't deploy or needs manual deployment.
@@ -1156,7 +1154,7 @@
 
 //#define UNKNOWN_Z_NO_RAISE      // Don't raise Z (lower the bed) if Z is "unknown." For beds that fall when Z is powered off.
 
-//#define Z_HOMING_HEIGHT  4      // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
+#define Z_HOMING_HEIGHT  10      // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
                                   // Be sure to have this much clearance over your Z_MAX_POS to prevent grinding.
 
 //#define Z_AFTER_HOMING  10      // (mm) Height to move to after homing Z
@@ -1183,8 +1181,8 @@
   #define Z_MAX_POS 400
 #else  //U30_Pro
   // The size of the print bed
-  #define X_BED_SIZE 220
-  #define Y_BED_SIZE 220
+  #define X_BED_SIZE 229 //228.5
+  #define Y_BED_SIZE 235 //230 // Le clip occupano 10mm per parte. Aggiungere poi 2mm di sicurezza perchè il nozzle non sbatta. Di tutto questo se ne occupa il profilo Ender 3 Cura
 
   // Travel limits (mm) after homing, corresponding to endstop positions.
   #define X_MIN_POS 0
@@ -1301,8 +1299,8 @@
 #if ENABLED(U20_Pro_AutoBed)
   #define AUTO_BED_LEVELING_BILINEAR
 #elif ENABLED(U30_Pro_AutoBed)
-  #define AUTO_BED_LEVELING_BILINEAR
-  //#define AUTO_BED_LEVELING_UBL
+  //#define AUTO_BED_LEVELING_BILINEAR
+  #define AUTO_BED_LEVELING_UBL
 #endif
 //#define AUTO_BED_LEVELING_UBL
 //#define MESH_BED_LEVELING

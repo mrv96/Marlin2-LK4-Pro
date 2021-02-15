@@ -1342,7 +1342,7 @@
    *
    * :[ 'LCD', 'ONBOARD', 'CUSTOM_CABLE' ]
    */
-  //#define SDCARD_CONNECTION LCD
+  #define SDCARD_CONNECTION ONBOARD // This enables the possibility to use an SD extender cable
 
 #endif // SDSUPPORT
 
