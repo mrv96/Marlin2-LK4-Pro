@@ -100,7 +100,7 @@
   #define U20_Pro_AutoBed
 #else //U30_Pro
   #define U30_Pro
-  #define U30_Pro_AutoBed
+  //#define U30_Pro_AutoBed
 #endif
 
 /**

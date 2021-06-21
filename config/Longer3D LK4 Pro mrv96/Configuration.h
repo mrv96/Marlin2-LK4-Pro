@@ -132,7 +132,7 @@
  * Currently Ethernet (-2) is only supported on Teensy 4.1 boards.
  * :[-2, -1, 0, 1, 2, 3, 4, 5, 6, 7]
  */
-//#define SERIAL_PORT_2 3
+#define SERIAL_PORT_2 3
 //#define BAUDRATE_2 250000   // Enable to override BAUDRATE
 
 /**
@@ -543,7 +543,7 @@
 // Above this temperature the heater will be switched off.
 // This can protect components from overheating, but NOT from shorts and failures.
 // (Use MINTEMP for thermistor short/failure protection.)
-#define HEATER_0_MAXTEMP 265
+#define HEATER_0_MAXTEMP 295
 #define HEATER_1_MAXTEMP 275
 #define HEATER_2_MAXTEMP 275
 #define HEATER_3_MAXTEMP 275
@@ -912,7 +912,7 @@
  * Override with M92
  *                                      X, Y, Z [, I [, J [, K]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 96 /*92.599*/ }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80.4, 400, 439.75/*96*/ }
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -1387,12 +1387,12 @@
   //#define K_MIN_POS 0
   //#define K_MAX_POS 50
 #else //U30_Pro
-  #define X_BED_SIZE 220
-  #define Y_BED_SIZE 220
+  #define X_BED_SIZE 229 //228.5
+  #define Y_BED_SIZE 235 //230 // Le clip occupano 10mm per parte. Aggiungere poi 2mm di sicurezza perchè il nozzle non sbatta. Di tutto questo se ne occupa il profilo Ender 3 Cura
 
   // Travel limits (mm) after homing, corresponding to endstop positions.
   #define X_MIN_POS 0
-  #define Y_MIN_POS 0
+  #define Y_MIN_POS -2
   #define Z_MIN_POS 0
   #define X_MAX_POS X_BED_SIZE
   #define Y_MAX_POS Y_BED_SIZE
@@ -1560,12 +1560,13 @@
 #if ENABLED(U20_Pro_AutoBed)
   #define AUTO_BED_LEVELING_BILINEAR
 #elif ENABLED(U30_Pro_AutoBed)
-  #define AUTO_BED_LEVELING_BILINEAR
-  //#define AUTO_BED_LEVELING_UBL
+  //#define AUTO_BED_LEVELING_BILINEAR
+  #define AUTO_BED_LEVELING_UBL
 #else
   //#define AUTO_BED_LEVELING_BILINEAR
   //#define AUTO_BED_LEVELING_UBL
 #endif
+//#define AUTO_BED_LEVELING_UBL
 //#define MESH_BED_LEVELING
 
 /**
