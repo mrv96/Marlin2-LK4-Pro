@@ -3685,15 +3685,15 @@ static_assert(   _ARR_TEST(3,0) && _ARR_TEST(3,1) && _ARR_TEST(3,2)
     #error "DGUS_LCD_UI_RELOADED requires a heated bed."
   #elif FAN_COUNT < 1
     #error "DGUS_LCD_UI_RELOADED requires a fan."
-  #elif !HAS_BED_PROBE
-    #error "DGUS_LCD_UI_RELOADED requires a bed probe."
-  #elif !HAS_MESH
+  // #elif !HAS_BED_PROBE
+  //   #error "DGUS_LCD_UI_RELOADED requires a bed probe."
+  #elif HAS_BED_PROBE && !HAS_MESH
     #error "DGUS_LCD_UI_RELOADED requires mesh leveling."
   #elif DISABLED(LEVEL_BED_CORNERS)
     #error "DGUS_LCD_UI_RELOADED requires LEVEL_BED_CORNERS."
   #elif DISABLED(BABYSTEP_ALWAYS_AVAILABLE)
     #error "DGUS_LCD_UI_RELOADED requires BABYSTEP_ALWAYS_AVAILABLE."
-  #elif DISABLED(BABYSTEP_ZPROBE_OFFSET)
+  #elif HAS_BED_PROBE && DISABLED(BABYSTEP_ZPROBE_OFFSET)
     #error "DGUS_LCD_UI_RELOADED requires BABYSTEP_ZPROBE_OFFSET."
   #elif ENABLED(AUTO_BED_LEVELING_UBL) && DISABLED(UBL_SAVE_ACTIVE_ON_M500)
     #warning "Without UBL_SAVE_ACTIVE_ON_M500, your mesh will not be saved when using the touchscreen."
